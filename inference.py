@@ -9,11 +9,12 @@ Original file is located at
 
 import numpy as np
 import pandas as pd
-from keras.models import load_model
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
 import pickle
 
 # Загрузка StandardScaler с использованием pickle
-with open('scaler.pkl', 'rb') as f:
+with open('models/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
 # Загрузка модели RandomForestClassifier с использованием pickle
@@ -24,17 +25,16 @@ with open('models/random_forest_model.pkl', 'rb') as f:
 new_data = pd.read_csv('data/new_data.csv')
 
 # Преобразование определенных столбцов в категориальный тип данных
-df['sex'] = pd.Categorical(df['sex'])
-df['exercise_induced_angina'] = pd.Categorical(df['exercise_induced_angina'])
-df['fasting_blood_sugar'] = pd.Categorical(df['fasting_blood_sugar'], categories=[0, 1], ordered=True)
-df['resting_electrocardiographic_results'] = pd.Categorical(df['resting_electrocardiographic_results'], categories=[0, 1, 2], ordered=True)
-df['slope'] = pd.Categorical(df['slope'], ordered=True)
-df['number_of_major_vessels'] = pd.Categorical(df['number_of_major_vessels'], ordered=True)
-df['thal'] = pd.Categorical(df['thal'], categories=[3, 7, 6], ordered=True)
+new_data['sex'] = pd.Categorical(new_data['sex'])
+new_data['exercise_induced_angina'] = pd.Categorical(new_data['exercise_induced_angina'])
+new_data['fasting_blood_sugar'] = pd.Categorical(new_data['fasting_blood_sugar'], categories=[0, 1], ordered=True)
+new_data['resting_electrocardiographic_results'] = pd.Categorical(new_data['resting_electrocardiographic_results'], categories=[0, 1, 2], ordered=True)
+new_data['slope'] = pd.Categorical(new_data['slope'], ordered=True)
+new_data['number_of_major_vessels'] = pd.Categorical(new_data['number_of_major_vessels'], ordered=True)
+new_data['thal'] = pd.Categorical(new_data['thal'], categories=[3, 7, 6], ordered=True)
 
-# Drop insignificant column
-df.drop('ID', axis=1, inplace=True)
-df.head()
+# Удаление незначительного столбца
+new_data.drop('ID', axis=1, inplace=True)
 
 # Проверка преобразованных данных
 print(new_data.head())
@@ -46,7 +46,7 @@ X_new = new_data.iloc[:, :13].values
 X_new_scaled = scaler.transform(X_new)
 
 # Запуск инференса
-rf_predictions = rf_model.predict(X_new)
+rf_predictions = rf_model.predict(X_new_scaled)
 
 # Вывод результатов предсказаний
 print('Random Forest Predictions:', rf_predictions)

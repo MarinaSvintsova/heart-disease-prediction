@@ -23,8 +23,8 @@ Three models for heart disease prediction
 1. **Склонируйте репозиторий:**
 
    ```bash
-   git clone https://github.com/username/repository.git
-   cd repository
+   git clone https://github.com/MarinaSvintsova/heart-disease-prediction.git
+   cd heart-disease-prediction
    ```
 
 2. **Создайте виртуальное окружение:**

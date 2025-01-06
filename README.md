@@ -53,7 +53,7 @@ Three models for heart disease prediction
 5. **Запуск скрипта инференса:**
 
    ```bash
-   python scripts/inference.py
+   python inference.py
    ```
 
 ## Структура проекта

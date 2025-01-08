@@ -22,7 +22,7 @@ with open('models/random_forest_model.pkl', 'rb') as f:
     rf_model = pickle.load(f)
 
 # Загрузка новых данных
-new_data = pd.read_csv('data/new_data.csv')
+new_data = pd.read_csv('data/test.csv')
 
 # Преобразование определенных столбцов в категориальный тип данных
 new_data['sex'] = pd.Categorical(new_data['sex'])
